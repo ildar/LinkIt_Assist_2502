@@ -18,6 +18,8 @@
 # this program; if not, write to the Free Software Foundation, Inc., 51 Franklin
 # Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
+# TODO: rewrite using kaitai with `doc/MTK_2502_vmlog.ksy`
+
 import serial
 import time
 import sys
@@ -86,6 +88,7 @@ class MTKModem(object):
         print ('Wait sync ...')
         while 1:
             data = self.read(1)
+            print ("x", end='')
             if data ==  b'\x55':
                 data2 = self.read(1)
                 if data2 == b'\x00':
@@ -114,6 +117,7 @@ class MTKModem(object):
                 self.getA5msg()
     
             else:
+                print (".", end='')
                 if flagNew == True:
                    
                     flagNew = False
@@ -130,11 +134,6 @@ class MTKModem(object):
         FrameNumber = self.read(1) #FrameNumber ?
         checksum = self.read(1)    
         
-    def getFix12msg(self):
-        # print 'Fix 12 msg',
-        data = self.read(12)
-        # print data.encode("hex")
-            
     def getmsgclean(self):
         msg = bytearray()
         a=0
